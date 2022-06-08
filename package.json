@@ -1,0 +1,23 @@
+{
+  "name": "cac-tat-cypress-automation",
+  "description": "Automação do site CAC-TAT utilizando Cypress, Node.js e JavaScript.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "cypress": "^9.5.1"
+  },
+  "scripts": {
+    "cy:open": "cypress open",
+    "test": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DinoSaulo/CAC-TAT-cypress-automation.git"
+  },
+  "author": "DinoSaulo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DinoSaulo/CAC-TAT-cypress-automation/issues"
+  },
+  "homepage": "https://github.com/DinoSaulo/CAC-TAT-cypress-automation#readme"
+}
