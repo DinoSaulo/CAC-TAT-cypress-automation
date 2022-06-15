@@ -103,7 +103,27 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click()
     })
 
-    it.only('Seleciona um arquivo da pasta fixtures', () => {
+    it('Seleciona um produto (YouTube) por seu texto', () => {
+        cy.get('#product').select('youtube')
+
+        cy.get('#product').should('have.value', 'youtube')
+    })
+
+    it('Seleciona um produto (Mentoria) por seu texto', () => {
+        cy.get('#product').select('Mentoria')
+
+        cy.get('#product').should('have.value', 'mentoria')
+    })
+
+    it('Seleciona um produto (Blog) por seu índice', () => {
+        cy.get('#product').select(1)
+
+        cy.get('#product').should('have.value', 'blog')
+    })
+
+    //
+
+    it('Seleciona um arquivo da pasta fixtures', () => {
         cy.get('#file-upload').should('not.have.value' )
 
         cy.get('#file-upload').selectFile('cypress/fixtures/example.json')
@@ -113,7 +133,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         })
     })
 
-    it.only('Seleciona um arquivo simulando um drag-and-drop', () => {
+    it('Seleciona um arquivo simulando um drag-and-drop', () => {
         cy.get('#file-upload').should('not.have.value' )
 
         cy.get('#file-upload').selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
@@ -123,7 +143,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         })
     })
 
-    it.only('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+    it('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
 
         cy.fixture('example.json', {encoding: null}).as('exampleFile')
 
