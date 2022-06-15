@@ -121,7 +121,18 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#product').should('have.value', 'blog')
     })
 
-    //
+    it('marca o tipo de atendimento "Feedback"', () => {
+        cy.get('input[value="feedback"]').check()
+
+        cy.get('input[value="feedback"]').should('be.checked')
+    })
+
+    it.only('marca cada tipo de atendimento', () => {
+        cy.get('input[type="radio"]').each( $radioInput => {
+            cy.wrap($radioInput).check().should('be.checked')
+        })
+
+    })
 
     it('Seleciona um arquivo da pasta fixtures', () => {
         cy.get('#file-upload').should('not.have.value' )
