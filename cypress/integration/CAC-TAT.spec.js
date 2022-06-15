@@ -24,7 +24,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('.success').should('contain', 'Mensagem enviada com sucesso')
     })
 
-    it.only('Verifica se é exibida uma mensagem de sucesso ao enviar o formulário digitando lentamente', function() {
+    it('Verifica se é exibida uma mensagem de sucesso ao enviar o formulário digitando lentamente', function() {
         const longText = 'Estou com problemas em pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo,pipipipopopo...'
 
         cy.get('#firstName').type('Scott', {delay: 500})
@@ -101,5 +101,37 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it('Encontrando o botão de enviar de forma alternativa', () => {
         cy.contains('button', 'Enviar').click()
+    })
+
+    it.only('Seleciona um arquivo da pasta fixtures', () => {
+        cy.get('#file-upload').should('not.have.value' )
+
+        cy.get('#file-upload').selectFile('cypress/fixtures/example.json')
+
+        cy.get('#file-upload').then( input => {
+            expect(input[0].files[0].name).to.equal('example.json')
+        })
+    })
+
+    it.only('Seleciona um arquivo simulando um drag-and-drop', () => {
+        cy.get('#file-upload').should('not.have.value' )
+
+        cy.get('#file-upload').selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
+
+        cy.get('#file-upload').then( input => {
+            expect(input[0].files[0].name).to.equal('example.json')
+        })
+    })
+
+    it.only('Seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', () => {
+
+        cy.fixture('example.json', {encoding: null}).as('exampleFile')
+
+        cy.get('#file-upload')
+            .should('not.have.value' )
+            .selectFile('@exampleFile')
+            .then( input => {
+                expect(input[0].files[0].name).to.equal('example.json')
+            })
     })
 })
