@@ -63,7 +63,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('#firstName').type('Scott')
         cy.get('#lastName').type('Pilgrim')
         cy.get('#email').type('scoot.pilgrim@email.com')
-        cy.get('#phone-checkbox').click()
+        cy.get('#phone-checkbox').check()
         cy.get('#open-text-area').type('Estou com problemas em pipipipopopo...')
 
         cy.get('button[type="submit"]').click()
@@ -127,11 +127,28 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('input[value="feedback"]').should('be.checked')
     })
 
-    it.only('marca cada tipo de atendimento', () => {
+    it('marca cada tipo de atendimento', () => {
         cy.get('input[type="radio"]').each( $radioInput => {
             cy.wrap($radioInput).check().should('be.checked')
         })
 
+    })
+
+    it('marca ambos checkboxes, depois desmarca o último', () => {
+        cy.get('input[type="checkbox"]').each( $checkboxInput => {
+            cy.wrap($checkboxInput).check().should('be.checked')
+        })
+
+        cy.get('input[type="checkbox"]').last().uncheck().should('be.not.checked')
+    })
+
+    it('marca ambos checkboxes, depois desmarca ambos', () => {
+        cy.get('input[type="checkbox"]').each( $checkboxInput => {
+            cy.wrap($checkboxInput).check().should('be.checked')
+        })
+
+        cy.get('input[type="checkbox"]').uncheck('email').should('be.not.checked')
+        cy.get('input[type="checkbox"]').uncheck('phone', {timeout: 2000}).should('be.not.checked')
     })
 
     it('Seleciona um arquivo da pasta fixtures', () => {
@@ -165,4 +182,17 @@ describe('Central de Atendimento ao Cliente TAT', function() {
                 expect(input[0].files[0].name).to.equal('example.json')
             })
     })
+
+    it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', () => {
+        cy.get('#privacy a').should('have.attr', 'target', '_blank')
+    })
+
+    it('acessa a página da política de privacidade removendo o target e então clicanco no link', () => {
+        cy.get('#privacy a').invoke('removeAttr', 'target')
+        cy.get('#privacy a').should('not.have.attr', 'target')
+        cy.get('#privacy a').click()
+
+        cy.contains('CAC TAT - Política de privacidade').should('be.visible')
+    })
+
 })
